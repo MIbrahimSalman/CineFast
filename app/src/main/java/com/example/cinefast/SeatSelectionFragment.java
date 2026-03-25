@@ -63,13 +63,8 @@ public class SeatSelectionFragment extends Fragment {
     // ── Now Showing Mode ──────────────────────────────────────────────────────
 
     private void setupNowShowingMode(GridLayout seatsGrid, View view) {
-        btnProceedSnacks.setVisibility(View.VISIBLE);
-        btnBookSeats.setVisibility(View.VISIBLE);
-
-        Button btnComingSoon = view.findViewById(R.id.btnComingSoon);
-        Button btnWatchTrailer = view.findViewById(R.id.btnWatchTrailer);
-        if (btnComingSoon != null) btnComingSoon.setVisibility(View.GONE);
-        if (btnWatchTrailer != null) btnWatchTrailer.setVisibility(View.GONE);
+        view.findViewById(R.id.layoutNowShowingButtons).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.layoutComingSoonButtons).setVisibility(View.GONE);
 
         int totalRows = 8;
         int totalCols = 9;
@@ -145,18 +140,11 @@ public class SeatSelectionFragment extends Fragment {
     // ── Coming Soon Mode ──────────────────────────────────────────────────────
 
     private void setupComingSoonMode(View view) {
-        btnProceedSnacks.setVisibility(View.GONE);
-        btnBookSeats.setVisibility(View.GONE);
+        view.findViewById(R.id.layoutNowShowingButtons).setVisibility(View.GONE);
+        view.findViewById(R.id.layoutComingSoonButtons).setVisibility(View.VISIBLE);
 
-        Button btnComingSoon = view.findViewById(R.id.btnComingSoon);
         Button btnWatchTrailer = view.findViewById(R.id.btnWatchTrailer);
-        if (btnComingSoon != null) {
-            btnComingSoon.setVisibility(View.VISIBLE);
-            btnComingSoon.setEnabled(false);
-            btnComingSoon.setAlpha(0.5f);
-        }
         if (btnWatchTrailer != null) {
-            btnWatchTrailer.setVisibility(View.VISIBLE);
             btnWatchTrailer.setOnClickListener(v -> {
                 android.content.Intent intent = new android.content.Intent(
                         android.content.Intent.ACTION_VIEW,

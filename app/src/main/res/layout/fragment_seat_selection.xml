@@ -105,6 +105,7 @@
 
     <!-- Bottom Buttons: Now Showing -->
     <LinearLayout
+        android:id="@+id/layoutNowShowingButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -134,6 +135,7 @@
 
     <!-- Bottom Buttons: Coming Soon (hidden by default) -->
     <LinearLayout
+        android:id="@+id/layoutComingSoonButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
