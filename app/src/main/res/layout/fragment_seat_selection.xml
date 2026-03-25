@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0A0A0A">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#1C1F24"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_back"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:id="@+id/textMovieTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Select Seats"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingStart="8dp" />
+    </LinearLayout>
+
+    <!-- Screen indicator -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="24dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_screen_curve_green" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="SCREEN"
+            android:textColor="#00C853"
+            android:textSize="11sp"
+            android:letterSpacing="0.2" />
+    </RelativeLayout>
+
+    <!-- Legend -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingVertical="8dp">
+
+        <View android:layout_width="16dp" android:layout_height="16dp"
+            android:background="@drawable/ic_seat_available" android:layout_marginEnd="4dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Available" android:textColor="#AAAAAA" android:textSize="11sp"
+            android:layout_marginEnd="16dp" />
+
+        <View android:layout_width="16dp" android:layout_height="16dp"
+            android:background="@drawable/ic_seat_selected_green" android:layout_marginEnd="4dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Selected" android:textColor="#AAAAAA" android:textSize="11sp"
+            android:layout_marginEnd="16dp" />
+
+        <View android:layout_width="16dp" android:layout_height="16dp"
+            android:background="@drawable/ic_seat_booked" android:layout_marginEnd="4dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Booked" android:textColor="#AAAAAA" android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Seat Grid (scrollable) -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp">
+
+        <GridLayout
+            android:id="@+id/seatsGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:columnCount="9"
+            android:rowCount="8"
+            android:padding="8dp" />
+    </ScrollView>
+
+    <!-- Bottom Buttons: Now Showing -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btnProceedSnacks"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Proceed to Snacks"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            android:background="@drawable/bg_confirm_btn" />
+
+        <Button
+            android:id="@+id/btnBookSeats"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Book Seats"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:background="@drawable/bg_button_red" />
+    </LinearLayout>
+
+    <!-- Bottom Buttons: Coming Soon (hidden by default) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btnComingSoon"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Coming Soon"
+            android:textColor="#AAAAAA"
+            android:textSize="13sp"
+            android:background="@drawable/bg_btn_round_grey"
+            android:enabled="false"
+            android:alpha="0.5" />
+
+        <Button
+            android:id="@+id/btnWatchTrailer"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Watch Trailer"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            android:background="@drawable/bg_confirm_btn" />
+    </LinearLayout>
+
+</LinearLayout>
