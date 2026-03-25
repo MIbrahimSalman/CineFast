@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.CineFast" parent="Base.Theme.CineFast" />
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

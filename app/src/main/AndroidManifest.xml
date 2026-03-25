@@ -15,7 +15,7 @@
             android:name=".OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".NewMainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -25,15 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SeatSelectionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SnacksActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TicketSummaryActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
