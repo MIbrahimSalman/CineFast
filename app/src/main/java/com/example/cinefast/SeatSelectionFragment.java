@@ -22,6 +22,8 @@ public class SeatSelectionFragment extends Fragment {
     private Set<String> selectedSeatTags = new HashSet<>();
     private Button btnProceedSnacks;
     private Button btnBookSeats;
+    private TextView textSeatCount;
+    private TextView textTicketTotal;
     private Movie movie;
 
     @Nullable
@@ -65,6 +67,9 @@ public class SeatSelectionFragment extends Fragment {
     private void setupNowShowingMode(GridLayout seatsGrid, View view) {
         view.findViewById(R.id.layoutNowShowingButtons).setVisibility(View.VISIBLE);
         view.findViewById(R.id.layoutComingSoonButtons).setVisibility(View.GONE);
+
+        textSeatCount = view.findViewById(R.id.textSeatCount);
+        textTicketTotal = view.findViewById(R.id.textTicketTotal);
 
         int totalRows = 8;
         int totalCols = 9;
@@ -196,6 +201,13 @@ public class SeatSelectionFragment extends Fragment {
         boolean hasSeats = !selectedSeatTags.isEmpty();
         btnProceedSnacks.setEnabled(hasSeats);
         btnProceedSnacks.setAlpha(hasSeats ? 1.0f : 0.5f);
+
+        int count = selectedSeatTags.size();
+        double total = 12.00 * count;
+        if (textSeatCount != null)
+            textSeatCount.setText("Selected: " + count + (count == 1 ? " seat" : " seats"));
+        if (textTicketTotal != null)
+            textTicketTotal.setText(String.format(java.util.Locale.getDefault(), "Total: $%.2f", total));
     }
 
     private void navigateToTicketSummary(double snacksTotal,

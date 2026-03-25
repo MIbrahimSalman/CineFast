@@ -103,6 +103,35 @@
             android:padding="8dp" />
     </ScrollView>
 
+    <!-- Live seat count + price bar -->
+    <LinearLayout
+        android:id="@+id/layoutSeatInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:background="#111111">
+
+        <TextView
+            android:id="@+id/textSeatCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Selected: 0 seats"
+            android:textColor="#AAAAAA"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/textTicketTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: $0.00"
+            android:textColor="#00C853"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <!-- Bottom Buttons: Now Showing -->
     <LinearLayout
         android:id="@+id/layoutNowShowingButtons"
