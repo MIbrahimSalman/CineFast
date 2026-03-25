@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red_cine">#D32F2F</color>
+    <color name="dark_background">#000000</color>
+    <color name="card_background">#1C212E</color>
+    <color name="text_gray">#888888</color>
+    <color name="blue_accent">#2979FF</color>
+    <color name="seat_available_stroke">#FFFFFF</color>
+    <color name="seat_selected">#FFD700</color> <!-- Gold/Yellow -->
+    <color name="seat_booked">#D32F2F</color> <!-- Grey -->
+    <color name="screen_glow">#33FFFFFF</color>
+    
+    <!-- New UI Colors -->
+    <color name="header_grey">#C0C0C0</color> <!-- Light Grey -->
+    <color name="tag_green">#00E676</color>
+    <color name="seat_selected_green">#00E676</color>
+    <color name="seat_booked_grey">#424242</color>
+    <color name="screen_green_glow">#3300E676</color>
+</resources>
