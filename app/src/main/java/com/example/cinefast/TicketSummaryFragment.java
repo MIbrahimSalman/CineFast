@@ -60,11 +60,19 @@ public class TicketSummaryFragment extends Fragment {
         textMovieTitle.setText(movieTitle);
         textTotalAmount.setText(String.format(Locale.getDefault(), "$%.2f USD", finalTotal));
 
-        // Poster
-        if (movieTitle.equals("The Dark Knight")) imgPoster.setImageResource(R.drawable.dark_knight);
-        else if (movieTitle.equals("Inception")) imgPoster.setImageResource(R.drawable.inception);
-        else if (movieTitle.equals("Interstellar")) imgPoster.setImageResource(R.drawable.interstellar);
-        else imgPoster.setImageResource(R.drawable.shawshank);
+        // Poster — covers all 6 movies
+        if (movieTitle.equals("The Dark Knight"))
+            imgPoster.setImageResource(R.drawable.dark_knight);
+        else if (movieTitle.equals("Inception"))
+            imgPoster.setImageResource(R.drawable.inception);
+        else if (movieTitle.equals("Interstellar"))
+            imgPoster.setImageResource(R.drawable.interstellar);
+        else if (movieTitle.equals("Oppenheimer"))
+            imgPoster.setImageResource(R.drawable.interstellar);
+        else if (movieTitle.equals("Dune: Part Two"))
+            imgPoster.setImageResource(R.drawable.inception);
+        else // The Shawshank Redemption
+            imgPoster.setImageResource(R.drawable.shawshank);
 
         // Seats
         if (selectedSeats != null) {

@@ -35,14 +35,14 @@ public class ComingSoonFragment extends Fragment {
                 "Oppenheimer",
                 "Biography / Drama",
                 "180 min",
-                R.drawable.shawshank,
+                R.drawable.interstellar,
                 "https://www.youtube.com/watch?v=uYPbbksJxIg",
                 true));
         movies.add(new Movie(
                 "Dune: Part Two",
                 "Sci-Fi / Adventure",
                 "166 min",
-                R.drawable.dark_knight,
+                R.drawable.inception,
                 "https://www.youtube.com/watch?v=Way9Dexny3w",
                 true));
         movies.add(new Movie(
