@@ -31,24 +31,21 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // ── ViewPager2 + Tabs ──────────────────────────────────────────────────
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 
         HomePagerAdapter adapter = new HomePagerAdapter(requireActivity());
         viewPager.setAdapter(adapter);
 
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            tab.setText(position == 0 ? "Now Showing" : "Coming Soon");
-        }).attach();
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) ->
+                tab.setText(position == 0 ? "Now Showing" : "Coming Soon")
+        ).attach();
 
-        // ── Date Toggle ────────────────────────────────────────────────────────
         TextView btnToday = view.findViewById(R.id.btnDateToday);
         TextView btnTomorrow = view.findViewById(R.id.btnDateTomorrow);
         btnToday.setOnClickListener(v -> updateDateSelection(true, btnToday, btnTomorrow));
         btnTomorrow.setOnClickListener(v -> updateDateSelection(false, btnToday, btnTomorrow));
 
-        // ── 3-Dots Overflow Menu ───────────────────────────────────────────────
         view.findViewById(R.id.btnOverflowMenu).setOnClickListener(this::showOverflowMenu);
     }
 
@@ -76,14 +73,15 @@ public class HomeFragment extends Fragment {
         if (movie == null || seats == -1 || price == -1f) {
             message = "No previous booking found.";
         } else {
-            message = "Movie: " + movie + "\nSeats: " + seats +
-                      "\nTotal Price: $" + String.format(java.util.Locale.getDefault(), "%.2f", price);
+            message = "Movie: " + movie
+                    + "\nSeats Booked: " + seats
+                    + "\nTotal Paid: " + String.format(java.util.Locale.getDefault(), "$%.2f", price);
         }
 
         new AlertDialog.Builder(requireContext())
                 .setTitle("Last Booking")
                 .setMessage(message)
-                .setPositiveButton("OK", null)
+                .setPositiveButton("Close", null)
                 .show();
     }
 
