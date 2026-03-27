@@ -25,9 +25,9 @@ public class NewMainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        // Load HomeFragment on first launch
+        // Load HomeFragment on first launch; tag back stack as "home"
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment(), false);
+            loadFragment(new HomeFragment(), "home");
         }
     }
 
@@ -77,19 +77,30 @@ public class NewMainActivity extends AppCompatActivity {
         args.putInt("QTY_DRINK", qtyDrink);
         args.putInt("QTY_CANDY", qtyCandy);
         fragment.setArguments(args);
-        loadFragment(fragment, true);
+        // Clear back stack to "home" so pressing Back from summary returns directly to Home
+        getSupportFragmentManager().popBackStack("home", 0);
+        loadFragment(fragment, null);
     }
 
     // ─── Internal helpers ─────────────────────────────────────────────────────
 
-    private void loadFragment(Fragment fragment, boolean addToBackStack) {
+    /**
+     * Load a fragment into the container.
+     * @param backStackTag non-null = add to back stack with this tag; null = do not add to back stack
+     */
+    private void loadFragment(Fragment fragment, String backStackTag) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragmentContainer, fragment);
-        if (addToBackStack) {
-            ft.addToBackStack(null);
+        if (backStackTag != null) {
+            ft.addToBackStack(backStackTag);
         }
         ft.commit();
+    }
+
+    /** Convenience overload: pass true to add to back stack (no name tag). */
+    private void loadFragment(Fragment fragment, boolean addToBackStack) {
+        loadFragment(fragment, addToBackStack ? "" : null);
     }
 
     // Getters for mediator data
