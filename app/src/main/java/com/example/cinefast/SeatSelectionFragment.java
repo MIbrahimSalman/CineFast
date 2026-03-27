@@ -68,9 +68,6 @@ public class SeatSelectionFragment extends Fragment {
         view.findViewById(R.id.layoutNowShowingButtons).setVisibility(View.VISIBLE);
         view.findViewById(R.id.layoutComingSoonButtons).setVisibility(View.GONE);
 
-        textSeatCount = view.findViewById(R.id.textSeatCount);
-        textTicketTotal = view.findViewById(R.id.textTicketTotal);
-
         int totalRows = 8;
         int totalCols = 9;
         int gapColumn = 4;

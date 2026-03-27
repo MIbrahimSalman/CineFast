@@ -27,7 +27,7 @@ public class SnacksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_snacks, container, false);
     }
 
@@ -42,8 +42,8 @@ public class SnacksFragment extends Fragment {
             ticketPrice = getArguments().getDouble("TICKET_PRICE", 0.0);
         }
 
-        view.findViewById(R.id.btnBack).setOnClickListener(v ->
-                requireActivity().getSupportFragmentManager().popBackStack());
+        view.findViewById(R.id.btnBack)
+                .setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
 
         textSnackTotal = view.findViewById(R.id.textSnackTotal);
 

@@ -26,9 +26,19 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/btnBack"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnMenu"
         app:layout_constraintStart_toEndOf="@id/btnBack"
         app:layout_constraintTop_toTopOf="@id/btnBack" />
+
+    <ImageButton
+        android:id="@+id/btnMenu"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_btn_round_grey"
+        android:src="@android:drawable/ic_menu_sort_by_size"
+        app:tint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,7 +53,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Poster + Title row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,6 +62,7 @@
                     android:id="@+id/imgPoster"
                     android:layout_width="100dp"
                     android:layout_height="150dp"
+                    android:src="@drawable/ic_launcher_background"
                     android:scaleType="centerCrop"
                     android:background="#333333" />
 
@@ -66,26 +76,97 @@
                         android:id="@+id/textMovieTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Movie"
+                        android:text="Oppenheimer"
                         android:textColor="#FFFFFF"
                         android:textSize="22sp"
                         android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+13"
+                            android:background="#00C853"
+                            android:paddingHorizontal="4dp"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="EN"
+                            android:background="@drawable/bg_tag_outline"
+                            android:paddingHorizontal="4dp"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Stars (90°Mall)"
-                        android:textColor="#AAAAAA"
-                        android:textSize="13sp" />
+                        android:text="ScreenX"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Hall: 1st  |  22:15"
-                        android:textColor="#AAAAAA"
-                        android:textSize="13sp" />
+                        android:text="Dolby Atmos"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Theater" android:textColor="#888888" android:textSize="12sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Stars (90°Mall)" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hall" android:textColor="#888888" android:textSize="12sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="1st" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Date" android:textColor="#888888" android:textSize="12sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="13.04.2025" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Time" android:textColor="#888888" android:textSize="12sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="22:15" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -153,7 +234,7 @@
                     android:id="@+id/textTotalAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$0.00 USD"
+                    android:text="$59.98 USD"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
