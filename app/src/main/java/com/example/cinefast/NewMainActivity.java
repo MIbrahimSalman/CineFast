@@ -25,7 +25,7 @@ public class NewMainActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment(), "home");
+            loadFragment(new HomeFragment(), (String) null);
         }
     }
 
@@ -73,8 +73,13 @@ public class NewMainActivity extends AppCompatActivity {
         args.putInt("QTY_DRINK", qtyDrink);
         args.putInt("QTY_CANDY", qtyCandy);
         fragment.setArguments(args);
-        getSupportFragmentManager().popBackStack("home", 0);
-        loadFragment(fragment, null);
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        loadFragment(fragment, (String) null);
+    }
+
+    public void navigateToHome() {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        loadFragment(new HomeFragment(), (String) null);
     }
 
     private void loadFragment(Fragment fragment, String backStackTag) {

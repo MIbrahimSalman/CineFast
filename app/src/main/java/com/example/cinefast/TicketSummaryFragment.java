@@ -40,8 +40,11 @@ public class TicketSummaryFragment extends Fragment {
         TextView textMovieTitle = view.findViewById(R.id.textMovieTitle);
         ImageView imgPoster = view.findViewById(R.id.imgPoster);
 
-        view.findViewById(R.id.btnBack).setOnClickListener(v ->
-                requireActivity().getSupportFragmentManager().popBackStack());
+        view.findViewById(R.id.btnBack).setOnClickListener(v -> {
+            if (getActivity() instanceof NewMainActivity) {
+                ((NewMainActivity) getActivity()).navigateToHome();
+            }
+        });
 
         Bundle args = getArguments();
         if (args == null) return;
