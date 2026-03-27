@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class NewMainActivity extends AppCompatActivity {
 
-    // Mediator data — shared across fragments
     private Movie currentMovie;
     private int currentSeatCount;
     private ArrayList<String> currentSelectedSeats;
@@ -25,13 +24,10 @@ public class NewMainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        // Load HomeFragment on first launch; tag back stack as "home"
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment(), "home");
         }
     }
-
-    // ─── Navigation helpers ───────────────────────────────────────────────────
 
     public void navigateToSeatSelection(Movie movie) {
         this.currentMovie = movie;
@@ -43,7 +39,7 @@ public class NewMainActivity extends AppCompatActivity {
     }
 
     public void navigateToSnacks(String movieTitle, int seatCount,
-                                  ArrayList<String> selectedSeats, double ticketPrice) {
+            ArrayList<String> selectedSeats, double ticketPrice) {
         this.currentSeatCount = seatCount;
         this.currentSelectedSeats = selectedSeats;
         this.currentTicketPrice = ticketPrice;
@@ -59,11 +55,11 @@ public class NewMainActivity extends AppCompatActivity {
     }
 
     public void navigateToTicketSummary(String movieTitle, int seatCount,
-                                         ArrayList<String> selectedSeats,
-                                         double ticketPrice, double snacksTotal,
-                                         double finalTotal,
-                                         int qtyPopcorn, int qtyNachos,
-                                         int qtyDrink, int qtyCandy) {
+            ArrayList<String> selectedSeats,
+            double ticketPrice, double snacksTotal,
+            double finalTotal,
+            int qtyPopcorn, int qtyNachos,
+            int qtyDrink, int qtyCandy) {
         TicketSummaryFragment fragment = new TicketSummaryFragment();
         Bundle args = new Bundle();
         args.putString("MOVIE_TITLE", movieTitle);
@@ -77,17 +73,10 @@ public class NewMainActivity extends AppCompatActivity {
         args.putInt("QTY_DRINK", qtyDrink);
         args.putInt("QTY_CANDY", qtyCandy);
         fragment.setArguments(args);
-        // Clear back stack to "home" so pressing Back from summary returns directly to Home
         getSupportFragmentManager().popBackStack("home", 0);
         loadFragment(fragment, null);
     }
 
-    // ─── Internal helpers ─────────────────────────────────────────────────────
-
-    /**
-     * Load a fragment into the container.
-     * @param backStackTag non-null = add to back stack with this tag; null = do not add to back stack
-     */
     private void loadFragment(Fragment fragment, String backStackTag) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -98,14 +87,23 @@ public class NewMainActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    /** Convenience overload: pass true to add to back stack (no name tag). */
     private void loadFragment(Fragment fragment, boolean addToBackStack) {
         loadFragment(fragment, addToBackStack ? "" : null);
     }
 
-    // Getters for mediator data
-    public Movie getCurrentMovie() { return currentMovie; }
-    public int getCurrentSeatCount() { return currentSeatCount; }
-    public ArrayList<String> getCurrentSelectedSeats() { return currentSelectedSeats; }
-    public double getCurrentTicketPrice() { return currentTicketPrice; }
+    public Movie getCurrentMovie() {
+        return currentMovie;
+    }
+
+    public int getCurrentSeatCount() {
+        return currentSeatCount;
+    }
+
+    public ArrayList<String> getCurrentSelectedSeats() {
+        return currentSelectedSeats;
+    }
+
+    public double getCurrentTicketPrice() {
+        return currentTicketPrice;
+    }
 }
