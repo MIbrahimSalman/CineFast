@@ -1,5 +1,6 @@
 package com.example.cinefast;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -22,7 +23,8 @@ public class OnboardingActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnGetStarted).setOnClickListener(v -> {
-            android.content.Intent intent = new android.content.Intent(this, NewMainActivity.class);
+            // Updated to route to LoginActivity instead of NewMainActivity
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
         });

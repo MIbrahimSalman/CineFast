@@ -1,6 +1,7 @@
 package com.example.cinefast;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String PREFS_NAME = "cinefast_session_pref_v3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +28,18 @@ public class MainActivity extends AppCompatActivity {
         logo.startAnimation(rotateFade);
         appName.startAnimation(fadeAnim);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
+        new Handler().postDelayed(() -> {
+            SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            if (prefs.getBoolean("logged_in", false)) {
+                // Session exists — go directly to DrawerActivity
+                Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-
-                finish();
+            } else {
+                // No session — show onboarding
+                startActivity(new Intent(MainActivity.this, OnboardingActivity.class));
             }
-        }, 5000);
+            finish();
+        }, 3000);
     }
 }
