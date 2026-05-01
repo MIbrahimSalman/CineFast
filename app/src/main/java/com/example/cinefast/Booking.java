@@ -11,12 +11,14 @@ public class Booking {
     private double finalTotal;
     private long timestamp;
     private long showTimestamp;
+    private String movieDate;
+    private String movieTime;
 
     public Booking() {
         // Required for Firebase
     }
 
-    public Booking(String id, String userId, String movieTitle, int seatCount, List<String> selectedSeats, double finalTotal, long timestamp, long showTimestamp) {
+    public Booking(String id, String userId, String movieTitle, int seatCount, List<String> selectedSeats, double finalTotal, long timestamp, long showTimestamp, String movieDate, String movieTime) {
         this.id = id;
         this.userId = userId;
         this.movieTitle = movieTitle;
@@ -25,6 +27,8 @@ public class Booking {
         this.finalTotal = finalTotal;
         this.timestamp = timestamp;
         this.showTimestamp = showTimestamp;
+        this.movieDate = movieDate;
+        this.movieTime = movieTime;
     }
 
     public String getId() { return id; }
@@ -50,4 +54,10 @@ public class Booking {
 
     public long getShowTimestamp() { return showTimestamp; }
     public void setShowTimestamp(long showTimestamp) { this.showTimestamp = showTimestamp; }
+
+    public String getMovieDate() { return movieDate; }
+    public void setMovieDate(String movieDate) { this.movieDate = movieDate; }
+
+    public String getMovieTime() { return movieTime; }
+    public void setMovieTime(String movieTime) { this.movieTime = movieTime; }
 }

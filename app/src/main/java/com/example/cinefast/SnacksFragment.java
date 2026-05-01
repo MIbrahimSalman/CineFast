@@ -46,6 +46,16 @@ public class SnacksFragment extends Fragment {
         view.findViewById(R.id.btnBack)
                 .setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
 
+        // Fix Hamburger Menu
+        View btnMenu = view.findViewById(R.id.btnMenu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (getActivity() instanceof DrawerActivity) {
+                    ((DrawerActivity) getActivity()).openDrawer();
+                }
+            });
+        }
+
         textSnackTotal = view.findViewById(R.id.textSnackTotal);
 
         // Build snack list from SQLite

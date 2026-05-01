@@ -50,6 +50,16 @@ public class MyBookingsFragment extends Fragment {
             }
         });
 
+        // Fix Hamburger Menu
+        View btnMenu = view.findViewById(R.id.btnMenu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (getActivity() instanceof DrawerActivity) {
+                    ((DrawerActivity) getActivity()).openDrawer();
+                }
+            });
+        }
+
         recyclerBookings.setLayoutManager(new LinearLayoutManager(requireContext()));
         bookingList = new ArrayList<>();
         adapter = new BookingAdapter(bookingList);
@@ -116,7 +126,8 @@ public class MyBookingsFragment extends Fragment {
                 List<String> seats = new ArrayList<>();
                 seats.add("1_2");
                 seats.add("1_3");
-                Booking dummy = new Booking(bookingId, uid, "Future Dummy Movie", 2, seats, 24.0, System.currentTimeMillis(), futureShow);
+                // Using the updated constructor: id, userId, movieTitle, seatCount, selectedSeats, finalTotal, timestamp, showTimestamp, movieDate, movieTime
+                Booking dummy = new Booking(bookingId, uid, "Future Dummy Movie", 2, seats, 24.0, System.currentTimeMillis(), futureShow, "DummyDate", "DummyTime");
                 ref.child(bookingId).setValue(dummy);
             }
             prefs.edit().putBoolean("dummy_future_added", true).apply();

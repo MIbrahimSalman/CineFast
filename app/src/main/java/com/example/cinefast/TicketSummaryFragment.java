@@ -132,6 +132,16 @@ public class TicketSummaryFragment extends Fragment {
         view.findViewById(R.id.btnSendTicket).setOnClickListener(v -> {
             confirmBooking(movieTitle, seatCount, selectedSeats, finalTotal);
         });
+
+        // Fix Hamburger Menu
+        View btnMenu = view.findViewById(R.id.btnMenu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (getActivity() instanceof DrawerActivity) {
+                    ((DrawerActivity) getActivity()).openDrawer();
+                }
+            });
+        }
     }
 
     private void addRow(LinearLayout container, String label, String price) {
@@ -169,15 +179,28 @@ public class TicketSummaryFragment extends Fragment {
         }
         String uid = user.getUid();
 
-        com.google.firebase.database.DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("bookings").child(uid);
-        String bookingId = ref.push().getKey();
+        com.google.firebase.database.FirebaseDatabase db = com.google.firebase.database.FirebaseDatabase.getInstance();
+        com.google.firebase.database.DatabaseReference userRef = db.getReference("bookings").child(uid);
+        com.google.firebase.database.DatabaseReference globalRef = db.getReference("all_bookings");
+        
+        String bookingId = userRef.push().getKey();
 
         if (bookingId != null) {
             long showTimestamp = System.currentTimeMillis(); // fallback
+            String mDate = "";
+            String mTime = "";
+            
             if (getActivity() instanceof DrawerActivity) {
                 Movie currentMovie = ((DrawerActivity) getActivity()).getCurrentMovie();
                 if (currentMovie != null && currentMovie.getDate() != null) {
                     try {
+                        String fullDate = currentMovie.getDate();
+                        if (fullDate.contains(", ")) {
+                            String[] parts = fullDate.split(", ");
+                            mDate = parts[0];
+                            mTime = parts[1];
+                        }
+                        
                         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy, HH:mm", java.util.Locale.getDefault());
                         java.util.Date showDate = sdf.parse(currentMovie.getDate());
                         if (showDate != null) {
@@ -189,8 +212,12 @@ public class TicketSummaryFragment extends Fragment {
                 }
             }
             
-            Booking booking = new Booking(bookingId, uid, movieTitle, seatCount, selectedSeats, finalTotal, System.currentTimeMillis(), showTimestamp);
-            ref.child(bookingId).setValue(booking).addOnSuccessListener(aVoid -> {
+            Booking booking = new Booking(bookingId, uid, movieTitle, seatCount, selectedSeats, finalTotal, System.currentTimeMillis(), showTimestamp, mDate, mTime);
+            
+            // Save to user node
+            userRef.child(bookingId).setValue(booking);
+            // Save to global node for seat occupancy checking
+            globalRef.child(bookingId).setValue(booking).addOnSuccessListener(aVoid -> {
                 android.widget.Toast.makeText(requireContext(), "Booking confirmed successfully!", android.widget.Toast.LENGTH_SHORT).show();
                 if (getActivity() instanceof DrawerActivity) {
                     ((DrawerActivity) getActivity()).navigateToHome();

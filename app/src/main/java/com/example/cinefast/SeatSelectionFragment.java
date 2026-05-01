@@ -60,6 +60,15 @@ public class SeatSelectionFragment extends Fragment {
         } else {
             setupNowShowingMode(seatsGrid, view);
         }
+        // Fix Hamburger Menu
+        View btnMenu = view.findViewById(R.id.btnMenu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (getActivity() instanceof DrawerActivity) {
+                    ((DrawerActivity) getActivity()).openDrawer();
+                }
+            });
+        }
     }
 
     // ── Now Showing Mode ──────────────────────────────────────────────────────
@@ -72,12 +81,58 @@ public class SeatSelectionFragment extends Fragment {
         int totalCols = 9;
         int gapColumn = 4;
 
-        Set<String> bookedSeats = new HashSet<>();
-        bookedSeats.add("1_2"); bookedSeats.add("1_6");
-        bookedSeats.add("3_3"); bookedSeats.add("3_5");
-        bookedSeats.add("5_1"); bookedSeats.add("6_2");
-        bookedSeats.add("6_7"); bookedSeats.add("7_3");
+        com.google.firebase.database.DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("all_bookings");
+        
+        // Query for bookings of this specific movie and date
+        ref.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot snapshot) {
+                Set<String> bookedSeats = new HashSet<>();
+                for (com.google.firebase.database.DataSnapshot ds : snapshot.getChildren()) {
+                    Booking b = ds.getValue(Booking.class);
+                    if (b != null && b.getMovieTitle().equals(movie.getTitle()) && b.getMovieDate().equals(movie.getDate().split(", ")[0])) {
+                        if (b.getSelectedSeats() != null) {
+                            bookedSeats.addAll(b.getSelectedSeats());
+                        }
+                    }
+                }
+                
+                seatsGrid.removeAllViews();
+                populateSeats(seatsGrid, totalRows, totalCols, gapColumn, bookedSeats);
+            }
 
+            @Override
+            public void onCancelled(@NonNull com.google.firebase.database.DatabaseError error) {
+                populateSeats(seatsGrid, totalRows, totalCols, gapColumn, new HashSet<>());
+            }
+        });
+
+        btnBookSeats.setOnClickListener(v -> {
+            if (selectedSeatTags.isEmpty()) {
+                Toast.makeText(requireContext(), "Please select at least one seat.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Proceeding to booking summary...", Toast.LENGTH_SHORT).show();
+                navigateToTicketSummary(0.0, 0, 0, 0, 0);
+            }
+        });
+
+        btnProceedSnacks.setOnClickListener(v -> {
+            if (selectedSeatTags.isEmpty()) {
+                Toast.makeText(requireContext(), "Please select at least one seat.", Toast.LENGTH_SHORT).show();
+            } else {
+                if (getActivity() instanceof DrawerActivity) {
+                    ArrayList<String> seatList = new ArrayList<>(selectedSeatTags);
+                    double ticketPrice = 12.00 * selectedSeatTags.size();
+                    ((DrawerActivity) getActivity()).navigateToSnacks(
+                            movie.getTitle(), selectedSeatTags.size(), seatList, ticketPrice);
+                }
+            }
+        });
+
+        updateButtons();
+    }
+
+    private void populateSeats(GridLayout seatsGrid, int totalRows, int totalCols, int gapColumn, Set<String> bookedSeats) {
         for (int row = 0; row < totalRows; row++) {
             for (int col = 0; col < totalCols; col++) {
                 if (col == gapColumn) {
@@ -107,36 +162,16 @@ public class SeatSelectionFragment extends Fragment {
                     seat.setBackgroundResource(R.drawable.ic_seat_booked);
                     seat.setEnabled(false);
                 } else {
-                    seat.setBackgroundResource(R.drawable.ic_seat_available);
+                    if (selectedSeatTags.contains(seatId)) {
+                        seat.setBackgroundResource(R.drawable.ic_seat_selected_green);
+                    } else {
+                        seat.setBackgroundResource(R.drawable.ic_seat_available);
+                    }
                     seat.setOnClickListener(v -> toggleSeat(v));
                 }
                 seatsGrid.addView(seat);
             }
         }
-
-        btnBookSeats.setOnClickListener(v -> {
-            if (selectedSeatTags.isEmpty()) {
-                Toast.makeText(requireContext(), "Please select at least one seat.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(requireContext(), "Booking Confirmed!", Toast.LENGTH_SHORT).show();
-                navigateToTicketSummary(0.0, 0, 0, 0, 0);
-            }
-        });
-
-        btnProceedSnacks.setOnClickListener(v -> {
-            if (selectedSeatTags.isEmpty()) {
-                Toast.makeText(requireContext(), "Please select at least one seat.", Toast.LENGTH_SHORT).show();
-            } else {
-                if (getActivity() instanceof DrawerActivity) {
-                    ArrayList<String> seatList = new ArrayList<>(selectedSeatTags);
-                    double ticketPrice = 12.00 * selectedSeatTags.size();
-                    ((DrawerActivity) getActivity()).navigateToSnacks(
-                            movie.getTitle(), selectedSeatTags.size(), seatList, ticketPrice);
-                }
-            }
-        });
-
-        updateButtons();
     }
 
     // ── Coming Soon Mode ──────────────────────────────────────────────────────
