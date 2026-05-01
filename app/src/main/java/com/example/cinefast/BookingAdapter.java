@@ -39,36 +39,42 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         Booking booking = bookingList.get(position);
 
         holder.textMovieTitle.setText(booking.getMovieTitle());
-        holder.textTotal.setText(String.format(Locale.getDefault(), "Total: $%.2f", booking.getFinalTotal()));
-        
-        String seatsStr = TextUtils.join(", ", booking.getSelectedSeats());
-        holder.textSeats.setText("Seats (" + booking.getSeatCount() + "): " + seatsStr);
+        holder.textSeats.setText(booking.getSeatCount() + " Tickets");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy - hh:mm a", Locale.getDefault());
-        holder.textDate.setText("Booked on: " + sdf.format(new Date(booking.getTimestamp())));
+        // Figma shows format like 13.04.2025,  22:15
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy, HH:mm", Locale.getDefault());
+        if (booking.getShowTimestamp() > 0) {
+            holder.textDate.setText(sdf.format(new Date(booking.getShowTimestamp())));
+        } else {
+            holder.textDate.setText(sdf.format(new Date(booking.getTimestamp())));
+        }
 
-        // Cancel logic (example: allowed within 24 hours)
+        // Cancel logic
         long currentTime = System.currentTimeMillis();
-        long diff = currentTime - booking.getTimestamp();
-        long twentyFourHours = 24L * 60L * 60L * 1000L;
 
-        if (diff > twentyFourHours) {
+        // If showTimestamp is set and the movie has started/passed
+        if (booking.getShowTimestamp() > 0 && currentTime > booking.getShowTimestamp()) {
             holder.btnCancel.setEnabled(false);
-            holder.btnCancel.setText("Cancellation Period Expired");
-            holder.btnCancel.setAlpha(0.5f);
+            holder.btnCancel.setAlpha(0.3f);
         } else {
             holder.btnCancel.setEnabled(true);
-            holder.btnCancel.setText("Cancel Booking");
             holder.btnCancel.setAlpha(1.0f);
             holder.btnCancel.setOnClickListener(v -> {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("bookings")
-                        .child(booking.getUserId())
-                        .child(booking.getId());
-                ref.removeValue().addOnSuccessListener(aVoid -> {
-                    Toast.makeText(v.getContext(), "Booking cancelled", Toast.LENGTH_SHORT).show();
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(v.getContext(), "Failed to cancel", Toast.LENGTH_SHORT).show();
-                });
+                new android.app.AlertDialog.Builder(v.getContext())
+                        .setTitle("Cancel Booking")
+                        .setMessage("Are you sure you want to cancel this booking?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("bookings")
+                                    .child(booking.getUserId())
+                                    .child(booking.getId());
+                            ref.removeValue().addOnSuccessListener(aVoid -> {
+                                Toast.makeText(v.getContext(), "Booking cancelled", Toast.LENGTH_SHORT).show();
+                            }).addOnFailureListener(e -> {
+                                Toast.makeText(v.getContext(), "Failed to cancel", Toast.LENGTH_SHORT).show();
+                            });
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
             });
         }
     }
@@ -79,14 +85,13 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
     }
 
     static class BookingViewHolder extends RecyclerView.ViewHolder {
-        TextView textMovieTitle, textSeats, textTotal, textDate;
-        Button btnCancel;
+        TextView textMovieTitle, textSeats, textDate;
+        android.widget.ImageButton btnCancel;
 
         BookingViewHolder(@NonNull View itemView) {
             super(itemView);
             textMovieTitle = itemView.findViewById(R.id.textMovieTitle);
             textSeats = itemView.findViewById(R.id.textSeats);
-            textTotal = itemView.findViewById(R.id.textTotal);
             textDate = itemView.findViewById(R.id.textDate);
             btnCancel = itemView.findViewById(R.id.btnCancelBooking);
         }

@@ -147,26 +147,28 @@ public class TicketSummaryFragment extends Fragment {
     }
 
     private void confirmBooking(String movieTitle, int seatCount, ArrayList<String> selectedSeats, double finalTotal) {
-        SharedPreferences prefs = requireActivity().getSharedPreferences("cinefast_session_pref_v3", android.content.Context.MODE_PRIVATE);
-        String uid = prefs.getString("uid", null);
-
-        if (uid == null) {
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
             android.widget.Toast.makeText(requireContext(), "You must be logged in to book.", android.widget.Toast.LENGTH_SHORT).show();
             return;
         }
+        String uid = user.getUid();
 
         com.google.firebase.database.DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("bookings").child(uid);
         String bookingId = ref.push().getKey();
 
         if (bookingId != null) {
-            Booking booking = new Booking(bookingId, uid, movieTitle, seatCount, selectedSeats, finalTotal, System.currentTimeMillis());
+            // Set showtime to be 1 day in the past, so current movies cannot be cancelled
+            long showTimestamp = System.currentTimeMillis() - (24L * 60L * 60L * 1000L);
+            Booking booking = new Booking(bookingId, uid, movieTitle, seatCount, selectedSeats, finalTotal, System.currentTimeMillis(), showTimestamp);
             ref.child(bookingId).setValue(booking).addOnSuccessListener(aVoid -> {
                 android.widget.Toast.makeText(requireContext(), "Booking confirmed successfully!", android.widget.Toast.LENGTH_SHORT).show();
                 if (getActivity() instanceof DrawerActivity) {
                     ((DrawerActivity) getActivity()).navigateToHome();
                 }
             }).addOnFailureListener(e -> {
-                android.widget.Toast.makeText(requireContext(), "Failed to confirm booking.", android.widget.Toast.LENGTH_SHORT).show();
+                android.widget.Toast.makeText(requireContext(), "Failed: " + e.getMessage(), android.widget.Toast.LENGTH_LONG).show();
+                android.util.Log.e("FirebaseBooking", "Error saving booking", e);
             });
         }
     }

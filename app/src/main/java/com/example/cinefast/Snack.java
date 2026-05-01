@@ -15,10 +15,27 @@ public class Snack {
         this.quantity = 0;
     }
 
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public double getPrice() { return price; }
-    public int getImageResId() { return imageResId; }
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getImageResId() {
+        return imageResId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

@@ -59,13 +59,15 @@ public class MyBookingsFragment extends Fragment {
     }
 
     private void loadBookings() {
-        SharedPreferences prefs = requireContext().getSharedPreferences("cinefast_session_pref_v3", android.content.Context.MODE_PRIVATE);
-        String uid = prefs.getString("uid", null);
-
-        if (uid == null) {
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
             textNoBookings.setVisibility(View.VISIBLE);
             return;
         }
+        String uid = user.getUid();
+        
+        // Add a dummy future booking once for testing
+        addDummyBookingOnce(uid);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("bookings").child(uid);
         ref.addValueEventListener(new ValueEventListener() {
@@ -95,7 +97,29 @@ public class MyBookingsFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                if (getContext() != null) {
+                    android.widget.Toast.makeText(getContext(), "Failed to load bookings: " + error.getMessage(), android.widget.Toast.LENGTH_LONG).show();
+                    android.util.Log.e("FirebaseBooking", "Error loading bookings", error.toException());
+                }
             }
         });
+    }
+
+    private void addDummyBookingOnce(String uid) {
+        SharedPreferences prefs = requireContext().getSharedPreferences("cinefast_session_pref_v3", android.content.Context.MODE_PRIVATE);
+        boolean added = prefs.getBoolean("dummy_future_added", false);
+        if (!added) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("bookings").child(uid);
+            String bookingId = ref.push().getKey();
+            if (bookingId != null) {
+                long futureShow = System.currentTimeMillis() + (5L * 24L * 60L * 60L * 1000L); // 5 days in future
+                List<String> seats = new ArrayList<>();
+                seats.add("1_2");
+                seats.add("1_3");
+                Booking dummy = new Booking(bookingId, uid, "Future Dummy Movie", 2, seats, 24.0, System.currentTimeMillis(), futureShow);
+                ref.child(bookingId).setValue(dummy);
+            }
+            prefs.edit().putBoolean("dummy_future_added", true).apply();
+        }
     }
 }
