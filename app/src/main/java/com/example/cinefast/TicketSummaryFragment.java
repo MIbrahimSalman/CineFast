@@ -63,6 +63,21 @@ public class TicketSummaryFragment extends Fragment {
         textMovieTitle.setText(movieTitle);
         textTotalAmount.setText(String.format(Locale.getDefault(), "$%.2f USD", finalTotal));
 
+        // Set Date and Time from Movie object if available
+        if (getActivity() instanceof DrawerActivity) {
+            Movie movie = ((DrawerActivity) getActivity()).getCurrentMovie();
+            if (movie != null && movie.getDate() != null) {
+                String fullDate = movie.getDate();
+                if (fullDate.contains(", ")) {
+                    String[] parts = fullDate.split(", ");
+                    TextView textMovieDate = view.findViewById(R.id.textMovieDate);
+                    TextView textMovieTime = view.findViewById(R.id.textMovieTime);
+                    if (textMovieDate != null) textMovieDate.setText(parts[0]);
+                    if (textMovieTime != null) textMovieTime.setText(parts[1]);
+                }
+            }
+        }
+
         // Poster — covers all 6 movies
         if (movieTitle.equals("The Dark Knight"))
             imgPoster.setImageResource(R.drawable.dark_knight);
@@ -158,8 +173,22 @@ public class TicketSummaryFragment extends Fragment {
         String bookingId = ref.push().getKey();
 
         if (bookingId != null) {
-            // Set showtime to be 1 day in the past, so current movies cannot be cancelled
-            long showTimestamp = System.currentTimeMillis() - (24L * 60L * 60L * 1000L);
+            long showTimestamp = System.currentTimeMillis(); // fallback
+            if (getActivity() instanceof DrawerActivity) {
+                Movie currentMovie = ((DrawerActivity) getActivity()).getCurrentMovie();
+                if (currentMovie != null && currentMovie.getDate() != null) {
+                    try {
+                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy, HH:mm", java.util.Locale.getDefault());
+                        java.util.Date showDate = sdf.parse(currentMovie.getDate());
+                        if (showDate != null) {
+                            showTimestamp = showDate.getTime();
+                        }
+                    } catch (java.text.ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            
             Booking booking = new Booking(bookingId, uid, movieTitle, seatCount, selectedSeats, finalTotal, System.currentTimeMillis(), showTimestamp);
             ref.child(bookingId).setValue(booking).addOnSuccessListener(aVoid -> {
                 android.widget.Toast.makeText(requireContext(), "Booking confirmed successfully!", android.widget.Toast.LENGTH_SHORT).show();

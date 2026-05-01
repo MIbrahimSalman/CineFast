@@ -20,14 +20,16 @@ public class Movie implements Serializable {
     private int posterResId;
     private String trailerUrl;
     private boolean isComingSoon;
+    private String date;
 
-    public Movie(String title, String genre, String duration, int posterResId, String trailerUrl, boolean isComingSoon) {
+    public Movie(String title, String genre, String duration, int posterResId, String trailerUrl, boolean isComingSoon, String date) {
         this.title = title;
         this.genre = genre;
         this.duration = duration;
         this.posterResId = posterResId;
         this.trailerUrl = trailerUrl;
         this.isComingSoon = isComingSoon;
+        this.date = date;
     }
 
     public String getTitle() { return title; }
@@ -36,6 +38,7 @@ public class Movie implements Serializable {
     public int getPosterResId() { return posterResId; }
     public String getTrailerUrl() { return trailerUrl; }
     public boolean isComingSoon() { return isComingSoon; }
+    public String getDate() { return date; }
 
     public static List<Movie> loadMoviesFromJson(Context context, boolean comingSoonFilter) {
         List<Movie> movies = new ArrayList<>();
@@ -58,13 +61,14 @@ public class Movie implements Serializable {
                     String duration = obj.getString("duration");
                     String posterName = obj.getString("posterName");
                     String trailerUrl = obj.getString("trailerUrl");
+                    String date = obj.getString("date");
 
                     int resId = context.getResources().getIdentifier(posterName, "drawable", context.getPackageName());
                     if (resId == 0) {
                         resId = R.drawable.movie_img; // fallback
                     }
 
-                    movies.add(new Movie(title, genre, duration, resId, trailerUrl, isComingSoon));
+                    movies.add(new Movie(title, genre, duration, resId, trailerUrl, isComingSoon, date));
                 }
             }
         } catch (IOException | JSONException e) {

@@ -5,7 +5,8 @@
     "duration": "152 min",
     "posterName": "dark_knight",
     "trailerUrl": "https://www.youtube.com/watch?v=EXeTwQWrcwY",
-    "isComingSoon": false
+    "isComingSoon": false,
+    "date": "18.07.2024, 20:00"
   },
   {
     "title": "Inception",
@@ -13,7 +14,8 @@
     "duration": "148 min",
     "posterName": "inception",
     "trailerUrl": "https://www.youtube.com/watch?v=YoHD9XEInc0",
-    "isComingSoon": false
+    "isComingSoon": false,
+    "date": "16.07.2024, 21:00"
   },
   {
     "title": "Interstellar",
@@ -21,7 +23,8 @@
     "duration": "169 min",
     "posterName": "interstellar",
     "trailerUrl": "https://www.youtube.com/watch?v=zSWdZVtXT7E",
-    "isComingSoon": false
+    "isComingSoon": false,
+    "date": "07.11.2024, 19:30"
   },
   {
     "title": "The Shawshank Redemption",
@@ -29,7 +32,8 @@
     "duration": "142 min",
     "posterName": "shawshank",
     "trailerUrl": "https://www.youtube.com/watch?v=6hB3S9bztOQ",
-    "isComingSoon": false
+    "isComingSoon": false,
+    "date": "23.09.2024, 18:00"
   },
   {
     "title": "Oppenheimer",
@@ -37,7 +41,8 @@
     "duration": "180 min",
     "posterName": "interstellar",
     "trailerUrl": "https://www.youtube.com/watch?v=uYPbbksJxIg",
-    "isComingSoon": true
+    "isComingSoon": true,
+    "date": "21.07.2027, 22:15"
   },
   {
     "title": "Dune: Part Two",
@@ -45,7 +50,8 @@
     "duration": "166 min",
     "posterName": "inception",
     "trailerUrl": "https://www.youtube.com/watch?v=Way9Dexny3w",
-    "isComingSoon": true
+    "isComingSoon": true,
+    "date": "01.03.2027, 20:45"
   },
   {
     "title": "The Shawshank Redemption",
@@ -53,6 +59,7 @@
     "duration": "142 min",
     "posterName": "shawshank",
     "trailerUrl": "https://www.youtube.com/watch?v=6hB3S9bztOQ",
-    "isComingSoon": true
+    "isComingSoon": true,
+    "date": "01.01.2028, 14:00"
   }
 ]
