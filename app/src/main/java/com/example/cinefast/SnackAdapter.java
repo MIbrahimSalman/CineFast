@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class SnackAdapter extends BaseAdapter {
@@ -19,10 +19,10 @@ public class SnackAdapter extends BaseAdapter {
     }
 
     private final Context context;
-    private final ArrayList<Snack> snacks;
+    private final List<Snack> snacks;
     private final OnQuantityChanged listener;
 
-    public SnackAdapter(Context context, ArrayList<Snack> snacks, OnQuantityChanged listener) {
+    public SnackAdapter(Context context, List<Snack> snacks, OnQuantityChanged listener) {
         this.context = context;
         this.snacks = snacks;
         this.listener = listener;

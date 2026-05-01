@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SnacksFragment extends Fragment {
 
@@ -47,12 +48,9 @@ public class SnacksFragment extends Fragment {
 
         textSnackTotal = view.findViewById(R.id.textSnackTotal);
 
-        // Build snack list
-        ArrayList<Snack> snacks = new ArrayList<>();
-        snacks.add(new Snack("Popcorn", 8.99, R.drawable.popcorn));
-        snacks.add(new Snack("Nachos", 7.99, R.drawable.nachos));
-        snacks.add(new Snack("Soft Drink", 5.99, R.drawable.soft_drink));
-        snacks.add(new Snack("Candy Mix", 6.99, R.drawable.candy));
+        // Build snack list from SQLite
+        SnackDbHelper dbHelper = new SnackDbHelper(requireContext());
+        List<Snack> snacks = dbHelper.getAllSnacks();
 
         snackAdapter = new SnackAdapter(requireContext(), snacks, this::updateTotal);
 
