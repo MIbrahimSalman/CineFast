@@ -49,8 +49,7 @@ public class DrawerActivity extends AppCompatActivity {
                 if (id == R.id.nav_home) {
                     navigateToHome();
                 } else if (id == R.id.nav_my_bookings) {
-                    // navigateToMyBookings(); // To be implemented in Commit 5
-                    Toast.makeText(DrawerActivity.this, "My Bookings coming in Commit 5", Toast.LENGTH_SHORT).show();
+                    navigateToMyBookings();
                 } else if (id == R.id.nav_logout) {
                     logout();
                 }
@@ -127,6 +126,12 @@ public class DrawerActivity extends AppCompatActivity {
         fragment.setArguments(args);
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         loadFragment(fragment, (String) null);
+    }
+
+    public void navigateToMyBookings() {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        loadFragment(new MyBookingsFragment(), (String) null);
+        navView.setCheckedItem(R.id.nav_my_bookings);
     }
 
     public void navigateToHome() {

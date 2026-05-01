@@ -113,10 +113,10 @@ public class TicketSummaryFragment extends Fragment {
                 .putFloat("last_price", (float) finalTotal)
                 .apply();
 
-        // Send Ticket button
-        view.findViewById(R.id.btnSendTicket).setOnClickListener(v ->
-                shareTicket(movieTitle, selectedSeats, finalTotal,
-                        qtyPopcorn, qtyNachos, qtyDrink, qtyCandy));
+        // Confirm Booking button
+        view.findViewById(R.id.btnSendTicket).setOnClickListener(v -> {
+            confirmBooking(movieTitle, seatCount, selectedSeats, finalTotal);
+        });
     }
 
     private void addRow(LinearLayout container, String label, String price) {
@@ -146,32 +146,28 @@ public class TicketSummaryFragment extends Fragment {
         container.addView(row);
     }
 
-    private void shareTicket(String movieTitle, ArrayList<String> seats, double total,
-                              int qtyPopcorn, int qtyNachos, int qtyDrink, int qtyCandy) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("🎬 CineFAST Ticket\n\nMovie: ").append(movieTitle).append("\n");
-        sb.append("Theater: Stars (90°Mall)\nHall: 1st\nDate: 13.04.2025  |  Time: 22:15\n\nSeats:\n");
-        if (seats != null) {
-            for (String seatTag : seats) {
-                String[] parts = seatTag.split("_");
-                char rowChar = (char) ('A' + Integer.parseInt(parts[0]));
-                int seatNum = Integer.parseInt(parts[1]) + 1;
-                sb.append(String.format(Locale.getDefault(), "- Row %c, Seat %d\n", rowChar, seatNum));
-            }
-        }
-        if (qtyPopcorn > 0 || qtyNachos > 0 || qtyDrink > 0 || qtyCandy > 0) {
-            sb.append("\nSnacks:\n");
-            if (qtyPopcorn > 0) sb.append("- ").append(qtyPopcorn).append("x Popcorn\n");
-            if (qtyNachos > 0) sb.append("- ").append(qtyNachos).append("x Nachos\n");
-            if (qtyDrink > 0) sb.append("- ").append(qtyDrink).append("x Soft Drink\n");
-            if (qtyCandy > 0) sb.append("- ").append(qtyCandy).append("x Candy Mix\n");
-        }
-        sb.append("\nTotal Paid: ").append(String.format(Locale.getDefault(), "$%.2f USD", total));
+    private void confirmBooking(String movieTitle, int seatCount, ArrayList<String> selectedSeats, double finalTotal) {
+        SharedPreferences prefs = requireActivity().getSharedPreferences("cinefast_session_pref_v3", android.content.Context.MODE_PRIVATE);
+        String uid = prefs.getString("uid", null);
 
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Movie Ticket: " + movieTitle);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
-        startActivity(Intent.createChooser(shareIntent, "Share Ticket via"));
+        if (uid == null) {
+            android.widget.Toast.makeText(requireContext(), "You must be logged in to book.", android.widget.Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        com.google.firebase.database.DatabaseReference ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("bookings").child(uid);
+        String bookingId = ref.push().getKey();
+
+        if (bookingId != null) {
+            Booking booking = new Booking(bookingId, uid, movieTitle, seatCount, selectedSeats, finalTotal, System.currentTimeMillis());
+            ref.child(bookingId).setValue(booking).addOnSuccessListener(aVoid -> {
+                android.widget.Toast.makeText(requireContext(), "Booking confirmed successfully!", android.widget.Toast.LENGTH_SHORT).show();
+                if (getActivity() instanceof DrawerActivity) {
+                    ((DrawerActivity) getActivity()).navigateToHome();
+                }
+            }).addOnFailureListener(e -> {
+                android.widget.Toast.makeText(requireContext(), "Failed to confirm booking.", android.widget.Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 }

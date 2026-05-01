@@ -248,7 +248,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_confirm_btn"
-        android:text="Send Ticket"
+        android:text="Confirm Booking"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
