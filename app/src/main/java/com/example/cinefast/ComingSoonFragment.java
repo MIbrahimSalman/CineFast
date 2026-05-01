@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ComingSoonFragment extends Fragment {
@@ -30,28 +29,8 @@ public class ComingSoonFragment extends Fragment {
         RecyclerView recycler = view.findViewById(R.id.recyclerComingSoon);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        List<Movie> movies = new ArrayList<>();
-        movies.add(new Movie(
-                "Oppenheimer",
-                "Biography / Drama",
-                "180 min",
-                R.drawable.interstellar,
-                "https://www.youtube.com/watch?v=uYPbbksJxIg",
-                true));
-        movies.add(new Movie(
-                "Dune: Part Two",
-                "Sci-Fi / Adventure",
-                "166 min",
-                R.drawable.inception,
-                "https://www.youtube.com/watch?v=Way9Dexny3w",
-                true));
-        movies.add(new Movie(
-                "The Shawshank Redemption",
-                "Drama",
-                "142 min",
-                R.drawable.shawshank,
-                "https://www.youtube.com/watch?v=6hB3S9bztOQ",
-                true));
+        // Load movies from JSON
+        List<Movie> movies = Movie.loadMoviesFromJson(requireContext(), true);
 
         MovieAdapter adapter = new MovieAdapter(movies, movie -> {
             if (getActivity() instanceof DrawerActivity) {

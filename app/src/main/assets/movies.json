@@ -1,0 +1,58 @@
+[
+  {
+    "title": "The Dark Knight",
+    "genre": "Action / Crime",
+    "duration": "152 min",
+    "posterName": "dark_knight",
+    "trailerUrl": "https://www.youtube.com/watch?v=EXeTwQWrcwY",
+    "isComingSoon": false
+  },
+  {
+    "title": "Inception",
+    "genre": "Sci-Fi / Thriller",
+    "duration": "148 min",
+    "posterName": "inception",
+    "trailerUrl": "https://www.youtube.com/watch?v=YoHD9XEInc0",
+    "isComingSoon": false
+  },
+  {
+    "title": "Interstellar",
+    "genre": "Sci-Fi / Drama",
+    "duration": "169 min",
+    "posterName": "interstellar",
+    "trailerUrl": "https://www.youtube.com/watch?v=zSWdZVtXT7E",
+    "isComingSoon": false
+  },
+  {
+    "title": "The Shawshank Redemption",
+    "genre": "Drama",
+    "duration": "142 min",
+    "posterName": "shawshank",
+    "trailerUrl": "https://www.youtube.com/watch?v=6hB3S9bztOQ",
+    "isComingSoon": false
+  },
+  {
+    "title": "Oppenheimer",
+    "genre": "Biography / Drama",
+    "duration": "180 min",
+    "posterName": "interstellar",
+    "trailerUrl": "https://www.youtube.com/watch?v=uYPbbksJxIg",
+    "isComingSoon": true
+  },
+  {
+    "title": "Dune: Part Two",
+    "genre": "Sci-Fi / Adventure",
+    "duration": "166 min",
+    "posterName": "inception",
+    "trailerUrl": "https://www.youtube.com/watch?v=Way9Dexny3w",
+    "isComingSoon": true
+  },
+  {
+    "title": "The Shawshank Redemption",
+    "genre": "Drama",
+    "duration": "142 min",
+    "posterName": "shawshank",
+    "trailerUrl": "https://www.youtube.com/watch?v=6hB3S9bztOQ",
+    "isComingSoon": true
+  }
+]
