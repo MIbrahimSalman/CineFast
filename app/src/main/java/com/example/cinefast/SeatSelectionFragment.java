@@ -127,10 +127,10 @@ public class SeatSelectionFragment extends Fragment {
             if (selectedSeatTags.isEmpty()) {
                 Toast.makeText(requireContext(), "Please select at least one seat.", Toast.LENGTH_SHORT).show();
             } else {
-                if (getActivity() instanceof NewMainActivity) {
+                if (getActivity() instanceof DrawerActivity) {
                     ArrayList<String> seatList = new ArrayList<>(selectedSeatTags);
                     double ticketPrice = 12.00 * selectedSeatTags.size();
-                    ((NewMainActivity) getActivity()).navigateToSnacks(
+                    ((DrawerActivity) getActivity()).navigateToSnacks(
                             movie.getTitle(), selectedSeatTags.size(), seatList, ticketPrice);
                 }
             }
@@ -210,11 +210,11 @@ public class SeatSelectionFragment extends Fragment {
     private void navigateToTicketSummary(double snacksTotal,
                                           int qtyPopcorn, int qtyNachos,
                                           int qtyDrink, int qtyCandy) {
-        if (getActivity() instanceof NewMainActivity) {
+        if (getActivity() instanceof DrawerActivity) {
             ArrayList<String> seatList = new ArrayList<>(selectedSeatTags);
             double ticketPrice = 12.00 * selectedSeatTags.size();
             double finalTotal = ticketPrice + snacksTotal;
-            ((NewMainActivity) getActivity()).navigateToTicketSummary(
+            ((DrawerActivity) getActivity()).navigateToTicketSummary(
                     movie.getTitle(), selectedSeatTags.size(), seatList,
                     ticketPrice, snacksTotal, finalTotal,
                     qtyPopcorn, qtyNachos, qtyDrink, qtyCandy);

@@ -54,8 +54,8 @@ public class ComingSoonFragment extends Fragment {
                 true));
 
         MovieAdapter adapter = new MovieAdapter(movies, movie -> {
-            if (getActivity() instanceof NewMainActivity) {
-                ((NewMainActivity) getActivity()).navigateToSeatSelection(movie);
+            if (getActivity() instanceof DrawerActivity) {
+                ((DrawerActivity) getActivity()).navigateToSeatSelection(movie);
             }
         });
         recycler.setAdapter(adapter);

@@ -47,8 +47,8 @@ public class NowShowingFragment extends Fragment {
 
     private void setupMovie(View root, int bookBtnId, int trailerBtnId, Movie movie) {
         root.findViewById(bookBtnId).setOnClickListener(v -> {
-            if (getActivity() instanceof NewMainActivity) {
-                ((NewMainActivity) getActivity()).navigateToSeatSelection(movie);
+            if (getActivity() instanceof DrawerActivity) {
+                ((DrawerActivity) getActivity()).navigateToSeatSelection(movie);
             }
         });
 

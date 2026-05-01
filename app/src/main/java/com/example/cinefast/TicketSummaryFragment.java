@@ -41,8 +41,8 @@ public class TicketSummaryFragment extends Fragment {
         ImageView imgPoster = view.findViewById(R.id.imgPoster);
 
         view.findViewById(R.id.btnBack).setOnClickListener(v -> {
-            if (getActivity() instanceof NewMainActivity) {
-                ((NewMainActivity) getActivity()).navigateToHome();
+            if (getActivity() instanceof DrawerActivity) {
+                ((DrawerActivity) getActivity()).navigateToHome();
             }
         });
 

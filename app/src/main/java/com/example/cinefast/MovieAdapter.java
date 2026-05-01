@@ -50,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             holder.itemView.getContext().startActivity(intent);
         });
 
-        // Book Seats button → callback to fragment → NewMainActivity
+        // Book Seats button → callback to fragment → DrawerActivity
         holder.btnBookSeats.setOnClickListener(v -> bookSeatsListener.onBookSeats(movie));
     }
 

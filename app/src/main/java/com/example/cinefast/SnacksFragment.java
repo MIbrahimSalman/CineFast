@@ -63,10 +63,10 @@ public class SnacksFragment extends Fragment {
 
         Button btnConfirm = view.findViewById(R.id.btnConfirm);
         btnConfirm.setOnClickListener(v -> {
-            if (getActivity() instanceof NewMainActivity) {
+            if (getActivity() instanceof DrawerActivity) {
                 double snacksTotal = snackAdapter.getTotalSnackCost();
                 double finalTotal = ticketPrice + snacksTotal;
-                ((NewMainActivity) getActivity()).navigateToTicketSummary(
+                ((DrawerActivity) getActivity()).navigateToTicketSummary(
                         movieTitle, seatCount, selectedSeats,
                         ticketPrice, snacksTotal, finalTotal,
                         snackAdapter.getQty(0), snackAdapter.getQty(1),

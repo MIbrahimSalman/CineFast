@@ -46,44 +46,16 @@ public class HomeFragment extends Fragment {
         btnToday.setOnClickListener(v -> updateDateSelection(true, btnToday, btnTomorrow));
         btnTomorrow.setOnClickListener(v -> updateDateSelection(false, btnToday, btnTomorrow));
 
-        view.findViewById(R.id.btnOverflowMenu).setOnClickListener(this::showOverflowMenu);
+        view.findViewById(R.id.btnOverflowMenu).setOnClickListener(v -> openNavigationDrawer());
     }
 
-    private void showOverflowMenu(View anchor) {
-        PopupMenu popup = new PopupMenu(requireContext(), anchor);
-        popup.getMenu().add(0, 1, 0, "View Last Booking");
-        popup.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == 1) {
-                showLastBooking();
-                return true;
-            }
-            return false;
-        });
-        popup.show();
-    }
-
-    private void showLastBooking() {
-        SharedPreferences prefs = requireActivity()
-                .getSharedPreferences("CineFastPrefs", android.content.Context.MODE_PRIVATE);
-        String movie = prefs.getString("last_movie", null);
-        int seats = prefs.getInt("last_seats", -1);
-        float price = prefs.getFloat("last_price", -1f);
-
-        String message;
-        if (movie == null || seats == -1 || price == -1f) {
-            message = "No previous booking found.";
-        } else {
-            message = "Movie: " + movie
-                    + "\nSeats Booked: " + seats
-                    + "\nTotal Paid: " + String.format(java.util.Locale.getDefault(), "$%.2f", price);
+    private void openNavigationDrawer() {
+        if (getActivity() instanceof DrawerActivity) {
+            ((DrawerActivity) getActivity()).openDrawer();
         }
-
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Last Booking")
-                .setMessage(message)
-                .setPositiveButton("Close", null)
-                .show();
     }
+
+
 
     private void updateDateSelection(boolean isToday, TextView btnToday, TextView btnTomorrow) {
         if (isToday) {
